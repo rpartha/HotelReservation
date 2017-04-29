@@ -1,42 +1,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Card &ndash; the better way to collect credit cards</title>
+    <title>Payment</title>
     <meta name="viewport" content="initial-scale=1">
     <!-- CSS is included through the card.js script -->
 
-     <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
-
-    <!-- FOnt Awesome Icons-->
-    <script src="https://use.fontawesome.com/ce18c92b36.js"></script>
-
     <!--import jQuery-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-
-    <!-- Compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
-
 
     <style>
         body{
             background-color:skyblue;
         }
 
-        ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+        /*
+        ::-webkit-input-placeholder {
             color: #FFF;
         }
-        :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+        :-moz-placeholder {
            color: #FFF;
            opacity: 1;
         }
-        ::-moz-placeholder { /* Mozilla Firefox 19+ */
+        ::-moz-placeholder {
            color: #FFF;
            opacity: 1;
         }
-        :-ms-input-placeholder { /* Internet Explorer 10-11 */
+        :-ms-input-placeholder {
            color: #FFF;
-        }
+        }*/
     </style>
 </head>
 <body>
@@ -46,14 +37,30 @@
             max-width: 350px;
             margin: 50px auto;
         }
-        form {
-            margin: 30px;
+        form{
+            margin:0px;
         }
         input {
-            width: 200px;
+            width: 345px;
+            height: 40px;
             margin: 10px auto;
-            display: block;
-
+        }
+        input[type="submit"]{
+          display: block;
+          height: 45px;
+          width: 100%;
+          border: none;
+          background-color: #3C8DC5;
+          color: #fff;
+          margin-top: 2px;
+          curson: pointer;
+          font-size: 0.9em;
+          text-transform: uppercase;
+          font-weight: bold;
+        }
+        input[type="submit"]:hover{
+          background-color: #6FB7E9;
+          transition: 0.3s ease;
         }
     </style>
     <div class="demo-container">
@@ -63,9 +70,10 @@
                 <input placeholder="Card number" type="tel" name="number">
                 <input placeholder="Full name" type="text" name="name">
                 <input placeholder="MM/YY" type="tel" name="expiry">
-                <input placeholder="CVC" type="number" name="cvc">
+                <input placeholder="CVC" type="number" name="cvc" >
             </form>
         </div>
+        <input id="input-button" type="submit" value="Submit" onclick = "location.href='#';"/>
     </div>
 
     <script src="/card.js"></script>
@@ -74,6 +82,10 @@
             form: document.querySelector('form'),
             container: '.card-wrapper'
         });
+
+        document.getElementById("input-button").onclick = function(){
+            location.href = "#"
+        }
     </script>
 </body>
 </html>
