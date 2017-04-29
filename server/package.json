@@ -1,0 +1,12 @@
+{
+  "name": "hotel_reservation_api",
+  "version": "1.0.0",
+  "description": "back-end for hotel reservation project for CS 336",
+  "main": "server.js",
+  "author": "Akhil Velagapudi",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2"
+  }
+}
