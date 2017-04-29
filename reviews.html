@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="author" content="Ramaseshan Parthasarathy">
+    <meta name="description" content="personal website">
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta name="msapplication-TileImage" content="images/minecraft_sword.png">
+    <meta name = "viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/> <!-- mobile optimize-->
+
+    <title>Profile</title>
+
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+
+    <!-- FOnt Awesome Icons-->
+    <script src="https://use.fontawesome.com/ce18c92b36.js"></script>
+
+    <!--import jQuery-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+
+    <style is = "custom-style">
+        .rating {
+            cursor: pointer;
+        }
+
+        .rating .rating-star {
+          display: inline-block;
+          position: relative;
+          padding-right: 5px;
+          margin-left: -5px;
+          color: #FFEB3B;
+        }
+        .rating .selected:before {
+          content: '\f005';
+        }
+
+        .form { margin: 0 auto; }
+
+         .content .input-field input:focus + label {
+            color: red;
+        }
+
+        .card-content .row input-field input:focus {
+            border-bottom: 1px solid red;
+            box-shadow: 0 1px 0 0 red;
+        }
+    </style>
+</head>
+    <body>
+        <div class="container" style="max-width:600px;">
+            <div class="card">
+                <div class="container" align = "middle">
+                  <h7>WRITE A REVIEW</h7>
+                  <hr>
+                </div>
+                <form class="card-content">
+                    <div class="rating" align = "center">
+                      <p>RATING: &nbsp;&nbsp;
+                      <i class="fa fa-star-o fa-2x rating-star" id="rating-1" data-rating="1"></i>
+                      <i class="fa fa-star-o fa-2x rating-star" id="rating-2" data-rating="2"></i>
+                      <i class="fa fa-star-o fa-2x rating-star" id="rating-3" data-rating="3"></i>
+                      <i class="fa fa-star-o fa-2x rating-star" id="rating-4" data-rating="4"></i>
+                      <i class="fa fa-star-o fa-2x rating-star" id="rating-5" data-rating="5"></i>
+                        </p>
+                    </div>
+                    <div class = "row">
+                        <div class="input-field col s12">
+                          <textarea id="textarea1" class="materialize-textarea"></textarea>
+                          <label for="textarea1">Description</label>
+                        </div>
+                    </div>
+                    <p>
+                    <button class="waves-effect waves-light red btn">SUBMIT</button></p>
+                </form>
+            </div>
+        </div>
+    </body>
+
+    <script>
+        /* stars*/
+        $(document).ready(function () {
+          $('.rating-star')
+          .on('mouseover', function(e) {
+            var rating = $(e.target).data('rating');
+            $('.rating-star').removeClass('fa-star-o').addClass('fa-star');
+            $('.rating-star#rating-' + rating + ' ~ .rating-star').removeClass('fa-star').addClass('fa-star-o');
+          })
+          .on('mouseleave', function (e) {
+            $('.rating-star').removeClass('fa-star').addClass('fa-star-o');
+          })
+          .on('click', function(e) {
+            var rating = $(e.target).data('rating');
+            $('#rating-input').val(rating);
+            $('.rating-star').removeClass('fa-star-o').addClass('selected');
+            $('.rating-star#rating-' + rating + ' ~ .rating-star').removeClass('selected').addClass('fa-star-o');
+          })
+        });
+
+        /* resize text area automatically */
+        $('#textarea1').trigger('autoresize');
+    </script>
+</html>
