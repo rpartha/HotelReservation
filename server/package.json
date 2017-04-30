@@ -5,8 +5,15 @@
   "main": "server.js",
   "author": "Akhil Velagapudi",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rpartha/hotel-reservation"
+  },
   "dependencies": {
     "body-parser": "^1.17.1",
-    "express": "^4.15.2"
+    "crypto": "0.0.3",
+    "express": "^4.15.2",
+    "mysql": "^2.13.0",
+    "password-hash": "^1.2.2"
   }
 }
