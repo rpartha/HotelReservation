@@ -1,22 +1,35 @@
 const express = require('express');
-const session = require('express-session');
-const parser = require('body-parser');
+const bodyParser = require('body-parser');
 const crypto = require('crypto');
 const mysql = require('mysql');
-const everyauth = require('everyauth');
+const AuthPort = require('authport');
+const config = require('./config');
 
 const sessionConfig = {
   resave: false,
   saveUninitialized: false,
-  secret: 'TOPOPODP',
+  secret: 'VERY VERY SECRET',
   signed: true
 };
 
 const app = express();
-app.use(parser.urlencoded({extended: true}));
-app.use(parser.json());
-app.use(session(sessionConfig));
-app.use(everyauth.middleware(app));
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
+
+AuthPort.on("auth", function(req, res, data) {
+	res.json(data);
+})
+
+AuthPort.on("error", function(req, res, data) {
+  // called when an error occurs during authentication
+})
+
+var google = AuthPort.createServer({
+  	service: "google",
+	id: config.OAUTH2_CLIENT_ID,
+	secret: config.OAUTH2_CLIENT_SECRET,
+	scope: ['https://www.googleapis.com/auth/userinfo.email']
+})
 
 const pool = mysql.createPool({
 	connectionLimit: 5,
@@ -27,33 +40,11 @@ const pool = mysql.createPool({
 	debug: true
 });
 
-everyauth.everymodule.findUserById( function (userId, callback) {
-	callback(null, {user: 'AKHIL', id: 3434});
-});
-everyauth.debug = true;
-everyauth.google
-	.appId('CLIENT ID')
-	.appSecret('CLIENT SECRET')
-	.redirectPath('/')
-	.scope('https://www.googleapis.com/auth/userinfo.profile https://www.google.com/m8/feeds/')
-	.findOrCreateUser( function (session, accessToken, accessTokenExtra, googleUserMetadata) {
-		console.log(googleUserMetadata);
-		var user = {
-			user: 'AKHIL',
-			id: 3434
-		};
-		return user;
-	});
-
 app.get('/', function (req, res) {
-	console.log(req.loggedIn);
-	console.log(req.user);  // FTW!
-	res.json(req.user);
+	res.send("<html><a href=\"/auth/google\">LOG IN</a></html>");
 });
 
-app.get('/login', function(req, res){
-	res.send("click <a href='/auth/google'>here to login</a>");
-});
+app.get("/auth/:service", AuthPort.app)
 
 function generateUniqueID(table, column, next){
 	const id = crypto.randomBytes(5).toString("hex");
