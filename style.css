@@ -1,6 +1,6 @@
 body{
 	margin: 50 absolute;
-	background-color: #3C8DC5;
+	background-color: skyblue;
 	margin top: 150px;
 }
 
@@ -14,7 +14,7 @@ body{
 	color: black;
 }
 
-input{
+input[type = "text"]{
 	
 	height: 45px;
 	width: 300px; 
