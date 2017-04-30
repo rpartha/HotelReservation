@@ -8,12 +8,16 @@
     <!--import jQuery-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+
     <style>
         body{
             background-color:skyblue;
         }
-
-        /*
         ::-webkit-input-placeholder {
             color: #FFF;
         }
@@ -27,7 +31,7 @@
         }
         :-ms-input-placeholder {
            color: #FFF;
-        }*/
+        }
     </style>
 </head>
 <body>
@@ -68,19 +72,25 @@
         <div class="form-container active">
             <form action="">
                 <input placeholder="Card number" type="tel" name="number">
-                <input placeholder="Full name" type="text" name="name">
+                <!--<input placeholder="Full name" type="text" name="name">-->
+                <input placeholder = "First Name" type="text" name="first-name">
+                <input placeholder = "Last Name" type="text" name="last-name">
                 <input placeholder="MM/YY" type="tel" name="expiry">
                 <input placeholder="CVC" type="number" name="cvc" >
             </form>
         </div>
-        <input id="input-button" type="submit" value="Submit" onclick = "location.href='#';"/>
+        <input id="input-button" type="submit" value="PAY NOW" onclick = "location.href='#';"/>
     </div>
 
     <script src="/card.js"></script>
     <script>
         new Card({
             form: document.querySelector('form'),
-            container: '.card-wrapper'
+            container: '.card-wrapper',
+
+             formSelectors: {
+                nameInput: 'input[name="first-name"], input[name="last-name"]'
+             }
         });
 
         document.getElementById("input-button").onclick = function(){
