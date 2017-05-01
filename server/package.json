@@ -10,10 +10,14 @@
     "url": "https://github.com/rpartha/hotel-reservation"
   },
   "dependencies": {
-    "authport": "^1.1.1",
     "body-parser": "^1.17.1",
     "crypto": "0.0.3",
     "express": "^4.15.2",
-    "mysql": "^2.13.0"
+    "mysql": "^2.13.0",
+    "path": "^0.12.7",
+    "request": "^2.81.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
   }
 }
