@@ -34,7 +34,7 @@ function generateUniqueID(table, column, next){
 	pool.query('SELECT * FROM ? WHERE ?=?', [table, column, id], function(err, results, fields){
 		if (err) throw err;
 		if (results.length == 0){
-			return next(null, id);
+			return next(id);
 		} else {
 			generateUniqueID(table, column, next);
 		}
