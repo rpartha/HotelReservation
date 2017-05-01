@@ -57,7 +57,7 @@ create table Reserves(
     foreign key(InvoiceNo) references Reservation(InvoiceNo));
 
 create table Customer(
-	cid char(21),
+	CID char(21),
     Email varchar(50),
     Addresss varchar(50),
     Phone_no varchar(15),
@@ -105,7 +105,7 @@ create table provides(
     foreign key(InvoiceNo) references Reservation(InvoiceNo));
 
 create table Review(
-	cid char(21),
+	CID char(21),
     ReviewId char(10),
     HotelId char(10),
     sType varchar(50) null,
