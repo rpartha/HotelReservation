@@ -2,11 +2,11 @@ use hotelreservationdb;
 
 create table Hotel(
 	HotelId char(10),
-    Street varchar(20),
-    City varchar(20),
-    Country varchar(20),
-    State varchar(20),
-    Zip varchar(8),
+    A_street varchar(20),
+    A_city varchar(20),
+    A_country varchar(20),
+    A_state varchar(20),
+    A_zip varchar(8),
     primary key(HotelId));
 
 create table PhoneNo(
@@ -21,7 +21,7 @@ create table Room(
     Price float,
     Capacity integer,
     Floor_no integer,
-    Description varchar(400),
+    R_description varchar(400),
     R_type varchar(20),
     primary key(HotelId,Room_no),
     foreign key(HotelId) references Hotel(HotelId));
@@ -36,7 +36,7 @@ create table Offer_Room(
     foreign key(HotelId,Room_no) references Room(HotelId,Room_no));
 
 create table Reservation(
-	CID char(10),
+	CID char(21),
     Cnumber char(16),
     InvoiceNo char(10),
     ResDate date,
@@ -57,7 +57,7 @@ create table Reserves(
     foreign key(InvoiceNo) references Reservation(InvoiceNo));
 
 create table Customer(
-	CID char(10),
+	cid char(21),
     Email varchar(50),
     Addresss varchar(50),
     Phone_no varchar(15),
@@ -105,7 +105,7 @@ create table provides(
     foreign key(InvoiceNo) references Reservation(InvoiceNo));
 
 create table Review(
-	CID char(10),
+	cid char(21),
     ReviewId char(10),
     HotelId char(10),
     sType varchar(50) null,

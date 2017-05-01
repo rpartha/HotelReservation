@@ -19,7 +19,7 @@ app.use(function(req, res, next){
 		next();
 	});
 });
-app.use(express.static('front_end'));
+app.use(express.static(path.resolve(__dirname + '/../' + 'front_end')));
 
 const pool = mysql.createPool({
 	connectionLimit: 5,
@@ -42,7 +42,7 @@ function generateUniqueID(table, column, next){
 };
 
 app.get('/', function (req, res){
-	res.sendFile(path.join(__dirname + '/front_end/login.html'));
+	res.sendFile(path.join(__dirname + '/../front_end/login.html'));
 });
 
 // required parameters: address, phone
