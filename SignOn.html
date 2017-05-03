@@ -20,34 +20,67 @@
 			h1{
 				font-size: 40px;
 			}
+
+            ::-webkit-input-placeholder {
+                color: #FFF;
+            }
+            :-moz-placeholder {
+               color: #FFF;
+               opacity: 1;
+            }
+            ::-moz-placeholder {
+               color: #FFF;
+               opacity: 1;
+            }
+            :-ms-input-placeholder {
+               color: #FFF;
+            }
+
+            input[type="submit"]{
+              display: block;
+              height: 45px;
+              border: none;
+              background-color: #3C8DC5;
+              color: #fff;
+              margin-top: 2px;
+                margin-left: 100px;
+              curson: pointer;
+              font-size: 0.9em;
+              text-transform: uppercase;
+              font-weight: bold;
+            }
+            input[type="submit"]:hover{
+              background-color: #6FB7E9;
+              transition: 0.3s ease;
+            }
 			</style>
 	<form align="center">
 		<p>
 					<div class="form-input">
 						<input type="text" name="FirstName"
-						placeholder="Please Enter Your First Name">
+						placeholder="Please Enter Your First Name" class = "validate">
 					</div>
 					<div class="form-input">
 						<input type="text" name="LastName"
-						placeholder="Please Enter Your Last Name">
+						placeholder="Please Enter Your Last Name" class = "validate">
 					</div>
 					<div class="form-input">
 						<input type="text" name="Address"
 						placeholder="Please Enter Your Address">
 					</div>
                     <div class="form-input">
-						<input type="text" name="Address"
-						placeholder="Please Enter Your Phone Number">
+						<input type="tel" name="phone"
+						placeholder="Please Enter Your Phone Number"  pattern="^\d{3}-\d{3}-\d{4}$" class = "validate">
 					</div>
 					<div class="form-input">
-						<input type="text" name="text"
-						placeholder="Please Enter Your E-Mail">
+						<input type="email" name="text"
+						placeholder="Please Enter Your E-Mail" class = "validate">
 					</div>
 					<div class="form-input">
 						<input type="password" name="password"
-						placeholder="Enter Your Password">
+						placeholder="Enter Your Password" class = "validate">
 					</div>
-					<a href = "#"> <input class="MyButton" onclick="window.location.href='LogIn.html'" type="button" value="Submit"3/>
+					<a href = "#"> <input class="MyButton" onclick="window.location.href='LogIn.html'" type="submit" value="Submit"3/>
 					</a>
 	</form>
     </body>
