@@ -20,6 +20,39 @@
 			h1{
 				font-size: 40px;
 			}
+
+            ::-webkit-input-placeholder {
+                color: #FFF;
+            }
+            :-moz-placeholder {
+               color: #FFF;
+               opacity: 1;
+            }
+            ::-moz-placeholder {
+               color: #FFF;
+               opacity: 1;
+            }
+            :-ms-input-placeholder {
+               color: #FFF;
+            }
+
+            input[type="submit"]{
+              display: block;
+              height: 45px;
+              border: none;
+              background-color: #3C8DC5;
+              color: #fff;
+              margin-top: 2px;
+                margin-left: 100px;
+              curson: pointer;
+              font-size: 0.9em;
+              text-transform: uppercase;
+              font-weight: bold;
+            }
+            input[type="submit"]:hover{
+              background-color: #6FB7E9;
+              transition: 0.3s ease;
+            }
 			</style>
 	<form align="center">
 		<p>
@@ -47,7 +80,7 @@
 						<input type="password" name="password"
 						placeholder="Enter Your Password" class = "validate">
 					</div>
-					<a href = "#"> <input class="MyButton" onclick="window.location.href='LogIn.html'" type="button" value="Submit"3/>
+					<a href = "#"> <input class="MyButton" onclick="window.location.href='LogIn.html'" type="submit" value="Submit"3/>
 					</a>
 	</form>
     </body>
