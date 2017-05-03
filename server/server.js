@@ -23,10 +23,10 @@ app.use(express.static(path.resolve(__dirname + '/../' + 'front_end')));
 
 const pool = mysql.createPool({
 	connectionLimit: 5,
-	host: 'hotelreservationdb.c3all2cpsbip.us-east-1.rds.amazonaws.com',
-	user: 'archimedes',
-	password: 'bogey-shoo-flair',
-	database: 'hotelreservationdb',
+	host: config.MYSQL_HOST,
+	user: config.MYSQL_USER,
+	password: config.MYSQL_PASSWORD,
+	database: config.MYSQL_DATABASE,
 });
 
 function generateUniqueID(table, column, next){
