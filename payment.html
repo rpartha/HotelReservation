@@ -70,16 +70,17 @@
     <div class="demo-container">
         <div class="card-wrapper"></div>
         <div class="form-container active">
-            <form action="">
-                <input placeholder="Card number" type="tel" name="number">
+            <form action="" name = "form">
+                <input placeholder="Card number" type="tel" name="number" required>
                 <!--<input placeholder="Full name" type="text" name="name">-->
-                <input placeholder = "First Name" type="text" name="first-name">
-                <input placeholder = "Last Name" type="text" name="last-name">
-                <input placeholder="MM/YY" type="tel" name="expiry">
-                <input placeholder="CVC" type="number" name="cvc" >
+                <input placeholder = "First Name" type="text" name="first-name" required>
+                <input placeholder = "Last Name" type="text" name="last-name" required>
+                <input placeholder="MM/YY" type="tel" name="expiry" required>
+                <input placeholder="CVC" type="number" name="cvc" required>
+                <!--<input id="input-button" type="submit" value="PAY NOW" onclick = "location.href='/bill.html';"/>-->
+                <input id="input-button" type="submit" value="PAY NOW" onclick = "function()"/>
             </form>
         </div>
-        <input id="input-button" type="submit" value="PAY NOW" onclick = "location.href='#';"/>
     </div>
 
     <script src="js/card.js"></script>
@@ -94,8 +95,37 @@
         });
 
         document.getElementById("input-button").onclick = function(){
-            location.href = "#"
+            if(validateForm()){
+                $("#form").submit();
+            }
         }
+
+      function validateForm() {
+        var x = document.forms["form"]["first-name"].value;
+        var y = document.forms["form"]["last-name"].value;
+        var z = document.forms["form"]["expiry"].value;
+        var w = document.forms["form"]["cvc"].value;
+
+        if (x == "") {
+            alert("First name is required!");
+            return false;
+        }
+
+        if (y = ""){
+            alert("Last name is required!");
+            return false;
+        }
+
+        if(z = ""){
+            alert("Expiry date is required!");
+            return false;
+        }
+
+        if(w = ""){
+            alert("CVC is required!");
+            return false;
+        }
+      }
     </script>
 </body>
 </html>
