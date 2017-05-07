@@ -105,26 +105,34 @@
         var y = document.forms["form"]["last-name"].value;
         var z = document.forms["form"]["expiry"].value;
         var w = document.forms["form"]["cvc"].value;
+        var u = document.forms["form"]["number"].value;
+
+        if(u == ""){
+            alert("Card number is required!");
+            return false;
+        }
 
         if (x == "") {
             alert("First name is required!");
             return false;
         }
 
-        if (y = ""){
+        if (y == ""){
             alert("Last name is required!");
             return false;
         }
 
-        if(z = ""){
+        if(z == ""){
             alert("Expiry date is required!");
             return false;
         }
 
-        if(w = ""){
+        if(w == ""){
             alert("CVC is required!");
             return false;
         }
+
+        window.location='#';
       }
     </script>
 </body>
