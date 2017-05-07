@@ -89,10 +89,10 @@ app.post('/addroom', function(req, res){
 	});
 });
 
-// required parameters
-app.post('/review', function(req, res){
+// required parameters: cid, hotelid, stype, btype, roomno, rating, text
+app.post('/addreview', function(req, res){
 	generateUniqueID('Review', 'ReviewId', function(id){
-		pool.query('INSERT INTO Review (CID,ReviewId,HotelId,Room_no,Rating,TextComment) VALUES (?,?,?,?,?,?)', [req.body.cid,id,req.body.hotelid,req.body.roomno,req.body.rating,req.body.text], function(err, results){
+		pool.query('INSERT INTO Review VALUES (?,?,?,?,?,?,?,?)', [req.body.cid,id,req.body.hotelid,req.body.stype,req.body.btype,req.body.roomno,req.body.rating,req.body.text], function(err, results){
 			if (err) throw err;
 			res.json(results);
 		});
