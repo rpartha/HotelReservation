@@ -31,7 +31,7 @@ const pool = mysql.createPool({
 
 function generateUniqueID(table, column, next){
 	const id = crypto.randomBytes(5).toString("hex");
-	pool.query('SELECT * FROM ? WHERE ?=?', [table, column, id], function(err, results, fields){
+	pool.query('SELECT * FROM ' + table + ' WHERE ?=?', [column, id], function(err, results, fields){
 		if (err) throw err;
 		if (results.length == 0){
 			return next(id);
@@ -68,6 +68,34 @@ app.post('/user', function(req, res){
 			user.phone = results[0].Phone_no;
 		}
 		res.json(user);
+	});
+});
+
+// required parameters: street, city, country, state, zip
+app.post('/addhotel', function(req, res){
+	generateUniqueID('Hotel', 'HotelId', function(id){
+		pool.query('INSERT INTO Hotel VALUES (?,?,?,?,?,?)', [id,req.body.street,req.body.city,req.body.country,req.body.state,req.body.zip], function(err, results){
+			if (err) throw err;
+			res.json(results);
+		});
+	});
+});
+
+// required parameters: hotelid, roomno, price, cap, floorno, desc, type
+app.post('/addroom', function(req, res){
+	pool.query('INSERT INTO Room VALUES (?,?,?,?,?,?,?)', [req.body.hotelid,req.body.roomno,req.body.price,req.body.cap,req.body.floorno,req.body.desc,req.body.type], function(err, results){
+		if (err) throw err;
+		res.json(results);
+	});
+});
+
+// required parameters
+app.post('/review', function(req, res){
+	generateUniqueID('Review', 'ReviewId', function(id){
+		pool.query('INSERT INTO Review (CID,ReviewId,HotelId,Room_no,Rating,TextComment) VALUES (?,?,?,?,?,?)', [req.body.cid,id,req.body.hotelid,req.body.roomno,req.body.rating,req.body.text], function(err, results){
+			if (err) throw err;
+			res.json(results);
+		});
 	});
 });
 

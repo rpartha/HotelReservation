@@ -1,0 +1,1 @@
+mysql -h hotelreservationdb.c3all2cpsbip.us-east-1.rds.amazonaws.com -u archimedes -D hotelreservationdb -pbogey-shoo-flair
