@@ -129,6 +129,36 @@ app.post('/getservices', function(req, res){
 	});
 });
 
+// required parameters: hotelid, startdate, enddate, rooms[]
+app.post('/makereservation', function(req, res){
+
+});
+
+// required parameters: cardno, addr, name, code, type, expdate
+app.post('/addcc', function(req, res){
+	pool.query('INSERT INTO CreditCard VALUES (?,?,?,?,?,?)', [req.body.cardno,req.body.addr,req.body.name,req.body.code,req.body.type,req.body.expdate]).then(function(results){
+		res.json(results);
+	});
+});
+
+
+app.get('/admin', function(req, res){
+	var adminDat = {};
+	pool.query('SELECT HotelId, R_type, MAX(Avg_rating) FROM (SELECT Room.HotelId, R_type, AVG(Rating) as \'Avg_rating\' FROM Room INNER JOIN Review ON Room.HotelId=Review.HotelId AND Room.Room_no=Review.Room_no GROUP BY Room.HotelId, R_type) AS GROUPING GROUP BY HotelId').then(function(results){
+		adminDat.rooms = results;
+		pool.query('SELECT HotelId, bType, MAX(Avg_rating) FROM (SELECT Breakfast.HotelId, Breakfast.bType, AVG(Rating) as \'Avg_rating\' FROM Breakfast INNER JOIN Review ON Breakfast.HotelId=Review.HotelId AND Breakfast.bType=Review.bType GROUP BY Breakfast.HotelId, bType) AS GROUPING GROUP BY HotelId').then(function(results2){
+			adminDat.breakfasts = results2;
+			pool.query('SELECT HotelId, sType, MAX(Avg_rating) FROM (SELECT Service.HotelId, Service.sType, AVG(Rating) as \'Avg_rating\' FROM Service INNER JOIN Review ON Service.HotelId=Review.HotelId AND Service.sType=Review.sType GROUP BY Service.HotelId, sType) AS GROUPING GROUP BY HotelId').then(function(results3){
+				adminDat.services = results3;
+				pool.query('SELECT C_name, SUM(TotalAmt) FROM Customer INNER JOIN Reservation ON Customer.CID=Reservation.CID GROUP BY C_name ORDER BY TotalAmt DESC LIMIT 5').then(function(results4){
+					adminDat.customers = results4;
+					res.json(adminDat);
+				});
+			});
+		});
+	});
+});
+
 app.post('/getreservations', function(req, res){
 	pool.query('SELECT * FROM Reservation WHERE CID=?', [req.body.cid]).then(function(results){
 		pool.query('SELECT * FROM Reserves').then(function(results2){
