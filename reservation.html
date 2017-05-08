@@ -110,19 +110,19 @@
                     </div>
                     <div class="row">
                         <div class="input-field col s4">
-                            <input id = "check_in" type="date" class="datepicker" placeholder = "Check In">
+                            <input id = "check_in" type="date" placeholder = "Check In">
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s4">
-                            <input id = "check_out" type="date" class="datepicker" placeholder = "Check Out">
+                            <input id = "check_out" type="date" placeholder = "Check Out">
                         </div>
                     </div>
                 <a class="waves-effect waves-light btn red" type = "submit" id = "btnContinue" style="margin-left:150px;">SEARCH</a>
             </form>
         </div>
         <div id='test2' class="col s12">
-            <form action="#" id = "rooms">
+            <form action="#" id = "rooms" name = "rooms">
                 <p style="padding-left:85vh">
                   <input type="checkbox" class = "checkbox-indigo" id="test5" />
                   <label for="test5">Room 1</label>
@@ -179,11 +179,16 @@
             $('ul.tabs').tabs();
             $("#btnContinue").click(function() {
                 if(validateSearch()){
+                    //$('ul.tabs').tabs('select_tab', 'test2');
                     $("#search").submit();
-                    $('ul.tabs').tabs('select_tab', 'test2');
                 }
             });
             $("#btnContinue2").click(function() {
+                var checked = $("#rooms input:checked").length > 0;
+                if (!checked){
+                    alert("Please check at least one room.");
+                    return false;
+                }
                 $('ul.tabs').tabs('select_tab', 'test4');
             });
         });
@@ -197,37 +202,43 @@
         var x = document.forms["search"]["country"].value;
         var y = document.forms["search"]["state"].value;
         var z = document.forms["search"]["room_type"].value;
-        var w = document.forms["search"]["check_in"].value;
         var u = document.forms["search"]["check_out"].value;
+        var w = document.forms["search"]["check_in"].value;
 
+        console.log(x);
+        console.log(y);
+        console.log(z);
+        console.log(u);
+        console.log(w);
+
+        //console.log($('.datepicker').val());
         if(u == ""){
-            alert("Country is required!");
+            alert("Check Out date is required!");
             return false;
         }
 
         if (x == "") {
-            alert("State is required!");
+            alert("Country is required!");
             return false;
         }
 
         if (y == ""){
-            alert("Room Type is required!");
+            alert("State is required!");
             return false;
         }
 
         if(z == ""){
-            alert("Check-In date is required!");
+            alert("Room Type is required!");
             return false;
         }
 
         if(w == ""){
-            alert("Check-Out date is required!");
+            alert("Check-In date is required!");
             return false;
         }
 
-        else{
-            window.location='#test2';
-        }
+        window.location = '#test2'
+        return true;
       }
     </script>
 </body>
