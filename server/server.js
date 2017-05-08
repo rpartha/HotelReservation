@@ -115,6 +115,20 @@ app.post('/addreview', function(req, res){
 	});
 });
 
+// required parameters: hotelid
+app.post('/getbreakfasts', function(req, res){
+	pool.query('SELECT * FROM Breakfast WHERE HotelId=?', [req.body.hotelid]).then(function(results){
+		res.json(results);
+	});
+});
+
+// required parameters: hotelid
+app.post('/getservices', function(req, res){
+	pool.query('SELECT * FROM Service WHERE HotelId=?', [req.body.hotelid]).then(function(results){
+		res.json(results);
+	});
+});
+
 app.post('/getreservations', function(req, res){
 	pool.query('SELECT * FROM Reservation WHERE CID=?', [req.body.cid]).then(function(results){
 		pool.query('SELECT * FROM Reserves').then(function(results2){
