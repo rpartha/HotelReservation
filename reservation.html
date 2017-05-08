@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="author" content="Ramaseshan Parthasarathy">
+    <meta name="description" content="user dashboard">
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta name = "viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/> <!-- mobile optimize-->
+
+    <title>Reservation</title>
+
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+
+    <!--import jQuery-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+
+    <!-- Font Awesome Icons-->
+    <script src="https://use.fontawesome.com/ce18c92b36.js"></script>
+
+    <!--MDL Icons=-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <style is = "custom-style">
+        body{
+            background-color:skyblue;
+        }
+
+        ::-webkit-input-placeholder {
+            color: #FFF;
+        }
+        :-moz-placeholder {
+           color: #FFF;
+           opacity: 1;
+        }
+        ::-moz-placeholder {
+           color: #FFF;
+           opacity: 1;
+        }
+        :-ms-input-placeholder {
+           color: #FFF;
+        }
+
+        .tabs .tab a{
+            color:#000;
+        } /*Black color to the text*/
+
+        .tabs .tab a:hover {
+            background-color:skyblue;
+            color:#000;
+        } /*Text color on hover*/
+
+        .tabs .tab a.active {
+            background-color:skyblue;
+            color:#000;
+        } /*Background and text color when a tab is active*/
+
+        .tabs .indicator {
+            background-color:#F44336;
+        } /*Color of underline*/
+
+        label { background-color:skyblue; color:#FFF; }
+
+        .checkbox-indigo[type="checkbox"] + label:after{
+          border: 2px solid indigo;
+          background: transparent;
+        }
+    </style>
+</head>
+
+<body>
+   <!-- <div class="class1" style="background-color:skyblue;padding-left:1px;">
+       <p>Pick your search criteria below...</p>
+    </div>
+    <div class="class2" style="background-color:skyblue;">
+        <p>COLUMN 2</p>
+    </div>
+    <div class="class3" style="background-color:skyblue;">
+        <p>COLUMN 3</p>
+    </div>-->
+    <div class="row">
+        <div class="col s12">
+          <ul class="tabs" style="background-color:skyblue;">
+            <li class="tab col s4"><a href="#test1" class = "active">SEARCH FOR HOTELS</a></li>
+            <li class="tab col s4"><a href="#test2">PICK ROOMS</a></li>
+            <li class="tab col s4"><a href="#test4">SELECT OPTIONS</a></li>
+          </ul>
+        </div>
+    </div>
+        <div id='test1' class="col s12">
+            <form class = "formValidate" action = "" id = "search">
+                    <div class = "row">
+                        <div class="input-field col s4">
+                          <input placeholder="Country" id="country" type="text" class="validate">
+                        </div>
+                    </div>
+                    <div class = "row">
+                        <div class="input-field col s4">
+                          <input placeholder = "State" id="state" type="text" class="validate">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s4">
+                            <input id = "room_type" type="text" placeholder = "Room Type">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s4">
+                            <input id = "check_in" type="date" class="datepicker" placeholder = "Check In">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s4">
+                            <input id = "check_out" type="date" class="datepicker" placeholder = "Check Out">
+                        </div>
+                    </div>
+                <a class="waves-effect waves-light btn red" type = "submit" id = "btnContinue" style="margin-left:150px;">SEARCH</a>
+            </form>
+        </div>
+        <div id='test2' class="col s12">
+            <form action="#" id = "rooms">
+                <p style="padding-left:85vh">
+                  <input type="checkbox" class = "checkbox-indigo" id="test5" />
+                  <label for="test5">Room 1</label>
+                </p>
+                <p style="padding-left:85vh">
+                  <input type="checkbox" id="test6" />
+                  <label for="test6">Room 2</label>
+                </p>
+                <p style="padding-left:85vh">
+                  <input type="checkbox" id="test7" />
+                  <label for="test7">Room 3</label>
+                </p>
+                <p style="padding-left:85vh">
+                  <input type="checkbox" id="test8" />
+                  <label for="test8">Room 4</label>
+                </p>
+                <p style="padding-left:85vh">
+                  <input type="checkbox" id="test9" />
+                  <label for="test9">Room 5</label>
+                </p>
+            </form>
+            <br/>
+            <a class="waves-effect waves-light btn red" href = '#test4' id = "btnContinue2" style="margin-left:85vh;">SELECT ROOMS</a>
+        </div>
+        <div id='test4' class="col s12">
+            <form action="#" id = "services">
+                <p style="padding-left:150vh">
+                  <input type="checkbox" class = "checkbox-indigo" id="test10" />
+                  <label for="test10">Continental Breakfast</label>
+                </p>
+                <p style="padding-left:150vh">
+                  <input type="checkbox" id="test11" />
+                  <label for="test11">Pay-per-view TV</label>
+                </p>
+                <p style="padding-left:150vh">
+                  <input type="checkbox" id="test12" />
+                  <label for="test12">Room Service</label>
+                </p>
+                <p style="padding-left:150vh">
+                  <input type="checkbox" id="test13" />
+                  <label for="test13">Wi-Fi</label>
+                </p>
+                <p style="padding-left:150vh">
+                  <input type="checkbox" id="test14" />
+                  <label for="test14">Laundry</label>
+                </p>
+            </form>
+            <br/>
+            <a class="waves-effect waves-light btn red" href = '#test4' type = "submit" id = "btnContinue2" style="margin-left:150vh;">PAY NOW</a>
+        </div>
+
+    <script>
+        $(document).ready(function(){
+            $('ul.tabs').tabs();
+            $("#btnContinue").click(function() {
+                if(validateSearch()){
+                    $("#search").submit();
+                    $('ul.tabs').tabs('select_tab', 'test2');
+                }
+            });
+            $("#btnContinue2").click(function() {
+                $('ul.tabs').tabs('select_tab', 'test4');
+            });
+        });
+
+         $('.datepicker').pickadate({
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 15 // Creates a dropdown of 15 years to control year
+        });
+
+    function validateSearch() {
+        var x = document.forms["search"]["country"].value;
+        var y = document.forms["search"]["state"].value;
+        var z = document.forms["search"]["room_type"].value;
+        var w = document.forms["search"]["check_in"].value;
+        var u = document.forms["search"]["check_out"].value;
+
+        if(u == ""){
+            alert("Country is required!");
+            return false;
+        }
+
+        if (x == "") {
+            alert("State is required!");
+            return false;
+        }
+
+        if (y == ""){
+            alert("Room Type is required!");
+            return false;
+        }
+
+        if(z == ""){
+            alert("Check-In date is required!");
+            return false;
+        }
+
+        if(w == ""){
+            alert("Check-Out date is required!");
+            return false;
+        }
+
+        else{
+            window.location='#test2';
+        }
+      }
+    </script>
+</body>
+</html>
