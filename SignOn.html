@@ -54,34 +54,21 @@
               transition: 0.3s ease;
             }
 			</style>
-	<form align="center">
+	<form align="center" action="/register">
 		<p>
-					<div class="form-input">
-						<input type="text" name="FirstName"
-						placeholder="Please Enter Your First Name" class = "validate">
-					</div>
-					<div class="form-input">
-						<input type="text" name="LastName"
-						placeholder="Please Enter Your Last Name" class = "validate">
-					</div>
-					<div class="form-input">
-						<input type="text" name="Address"
-						placeholder="Please Enter Your Address">
-					</div>
-                    <div class="form-input">
-						<input type="tel" name="phone"
-						placeholder="Please Enter Your Phone Number"  pattern="^\d{3}-\d{3}-\d{4}$" class = "validate">
-					</div>
-					<div class="form-input">
-						<input type="email" name="text"
-						placeholder="Please Enter Your E-Mail" class = "validate">
-					</div>
-					<div class="form-input">
-						<input type="password" name="password"
-						placeholder="Enter Your Password" class = "validate">
-					</div>
-					<a href = "#"> <input class="MyButton" onclick="window.location.href='LogIn.html'" type="submit" value="Submit"3/>
-					</a>
+				<div class="form-input">
+					<input type="text" name="address"
+					placeholder="Please Enter Your Address">
+				</div>
+                   <div class="form-input">
+					<input type="tel" name="phone"
+					placeholder="Please Enter Your Phone Number"  pattern="^\d{3}-\d{3}-\d{4}$" class = "validate">
+				</div>
+				<div class="form-input">
+					<input type="email" name="text"
+					placeholder="Please Enter Your E-Mail" class = "validate">
+				</div>
+				<input class="MyButton" type="submit" value="Submit"/>
 	</form>
     </body>
 </html>

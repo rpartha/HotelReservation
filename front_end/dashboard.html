@@ -8,7 +8,7 @@
     <meta name="msapplication-TileColor" content="#FFFFFF">
     <meta name = "viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/> <!-- mobile optimize-->
 
-    <title>Profile</title>
+    <title>Dashboard</title>
 
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
@@ -21,6 +21,9 @@
 
     <!-- Font Awesome Icons-->
     <script src="https://use.fontawesome.com/ce18c92b36.js"></script>
+
+    <!--MDL Icons=-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
     <style is = "custom-style">
         nav{
@@ -49,53 +52,17 @@
       <a href="#" class="brand-logo">DASHBOARD</a>
       <ul class="right hide-on-med-and-down">
         <li><a href="#"><i class="fa fa-2x fa-cog" aria-hidden="true"></i></a></li>
-        <li><a class="waves-effect waves-light indigo lighten-1 btn">Logout</a></li>
+        <li><a class="waves-effect waves-light indigo lighten-1 btn">Add Room Review</a></li>
+        <li><a class="waves-effect waves-light indigo lighten-1 btn">Add Breakfast Review</a></li>
+        <li><a class="waves-effect waves-light indigo lighten-1 btn">Add Service Review</a></li>
       </ul>
     </div>
   </nav>
-    <div class = "container">
-      <div class="row">
-          <div class="col s12 m5">
-            <div class="card">
-              <div class="card-content">
-                <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
-              </div>
-              <div class="card-tabs">
-                  <ul class="tabs tabs-fixed-width">
-                    <li class="tab"><a href="#test4">Room</a></li>
-                    <li class="tab"><a href="#test5">Breakfast</a></li>
-                    <li class="tab"><a href="#test6">Service</a></li>
-                  </ul>
-              </div>
-            <div class="card-content grey lighten-4">
-              <div id="test4">REVIEW HERE</div>
-              <div id="test5">REVIEW HERE</div>
-              <div id="test6">REVIEW HERE</div>
-            </div>
-            </div>
-          </div>
-       </div>
-    <div class="row">
-      <div class="col s12 m5">
-        <div class="card">
-          <div class="card-content">
-            <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
-          </div>
-          <div class="card-tabs">
-                  <ul class="tabs tabs-fixed-width">
-                    <li class="tab"><a href="#test7">Room</a></li>
-                    <li class="tab"><a href="#test8">Breakfast</a></li>
-                    <li class="tab"><a href="#test9">Service</a></li>
-                  </ul>
-              </div>
-            <div class="card-content grey lighten-4">
-              <div id="test7">REVIEW HERE</div>
-              <div id="test8">REVIEW HERE</div>
-              <div id="test9">REVIEW HERE</div>
-            </div>
-        </div>
-      </div>
+    <div class = "container" id="cont">
     </div>
+         <div class="fixed-action-btn horizontal" style="bottom: 45px; right: 24px;">
+            <a class="btn-floating btn-large waves-effect waves-light red" href="./reservation.html"><i class="material-icons">add</i></a>
+        </div>
     </div>
 </body>
 
@@ -105,9 +72,9 @@
     });
     $(document).ready(function(){
       $('ul.tabs').tabs('select_tab', 'tab_id');
+      $.get('/getreservations', {tokenId: localStorage.getItem("tokenId")}).done(function(data){
+        $('.container').append("<plaintext>" + JSON.stringify(data, null, '\t'));
+      });
     });
 </script>
 </html>
-
-
-

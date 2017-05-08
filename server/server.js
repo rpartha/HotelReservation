@@ -6,6 +6,9 @@ const path = require('path');
 const request = require('request');
 const config = require('./config');
 
+//astranglewhistle
+//astrange
+
 const app = express();
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
@@ -49,7 +52,7 @@ app.get('/', function (req, res){
 app.post('/register', function(req, res){
 	pool.query('INSERT INTO Customer VALUES (?,?,?,?,?)', [req.cid,req.email,req.body.address,req.body.phone,req.name], function(err, results){
 		if (err) throw err;
-		res.json(results);
+		res.redirect('/');
 	});
 });
 
@@ -159,19 +162,24 @@ app.get('/admin', function(req, res){
 	});
 });
 
-app.post('/getreservations', function(req, res){
-	pool.query('SELECT * FROM Reservation WHERE CID=?', [req.body.cid]).then(function(results){
-		pool.query('SELECT * FROM Reserves').then(function(results2){
-			join(results, results2, 'InvoiceNo', 'rooms');
-			pool.query('SELECT * FROM includes').then(function(results3){
-				join(results, results3, 'InvoiceNo', 'breakfast');
-				pool.query('SELECT * FROM provides').then(function(results4){
-					join(results, results4, 'InvoiceNo', 'services');
-					res.json(results);
+app.get('/getreservations', function(req, res){
+	request('https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=' + req.query.tokenId, function (err, response, bodyString){
+		if (err) throw err;
+		var body = JSON.parse(bodyString);
+		pool.query('SELECT * FROM Reservation WHERE CID=?', [body.sub]).then(function(results){
+			pool.query('SELECT * FROM Reserves').then(function(results2){
+				join(results, results2, 'InvoiceNo', 'rooms');
+				pool.query('SELECT * FROM includes').then(function(results3){
+					join(results, results3, 'InvoiceNo', 'breakfast');
+					pool.query('SELECT * FROM provides').then(function(results4){
+						join(results, results4, 'InvoiceNo', 'services');
+						res.json(results);
+					});
 				});
 			});
 		});
 	});
+	
 });
 
 function join(results, results2, columnName, joinName){

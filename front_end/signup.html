@@ -1,58 +1,20 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="utf-8"/>
+    <script type="text/javascript" src="https://apis.google.com/js/platform.js" async defer></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    
 			<title>
 				Sign-Up
 			</title>
-			<link rel="stylesheet" type="text/css" href="Main.css"/>
-			<link rel="stylesheet" type="text/css" href= "css/font-awesome.css">
-			<!-- Compiled and minified CSS -->
-   			 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
-			 <!--import jQuery-->
-   			 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-			<!-- Compiled and minified JavaScript -->
-    		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
 	</head>
 	<body>
-        <h1> Sign-Up </h1>
-        <style>
-			h1{
-				font-size: 40px;
-			}
-			</style>
-	<form align="center">
-		<p>
-					<div class="form-input">
-						<input type="text" name="FirstName"
-						placeholder="Please Enter Your First Name">
-					</div>
-					<div class="form-input">
-						<input type="text" name="LastName"
-						placeholder="Please Enter Your Last Name">
-					</div>
-					<div class="form-input">
-						<input type="text" name="Address"
-						placeholder="Please Enter Your Address">
-					</div>
-                    <div class="form-input">
-						<input type="text" name="Address"
-						placeholder="Please Enter Your Phone Number">
-					</div>
-					<div class="form-input">
-						<input type="text" name="text"
-						placeholder="Please Enter Your E-Mail">
-					</div>
-					<div class="form-input">
-						<input type="password" name="password"
-						placeholder="Enter Your Password">
-					</div>
-					<a href = "#"> <input class="MyButton" onclick="window.location.href='LogIn.html'" type="button" value="Submit"3/>
-					</a>
-	</form>
+      <h1> Sign-Up </h1>
+	    <form action="/register" method="post" id="form">
+					<input type="text" name="address" placeholder="Please Enter Your Address" style="width: 100%"><br>
+					<input type="tel" name="phone" placeholder="Please Enter Your Phone Number" style="width: 100%"><br>
+          <input class="MyButton" type="submit" value="Submit"/>
+	    </form>
+      <script type="text/javascript" src="./js/googleauth.js"></script>
     </body>
 </html>
-					
-					
-
-
