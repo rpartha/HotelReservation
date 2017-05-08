@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const crypto = require('crypto');
-const mysql = require('mysql');
+const mysql = require('promise-mysql');
 const path = require('path');
 const request = require('request');
 const config = require('./config');
@@ -89,6 +89,22 @@ app.post('/addroom', function(req, res){
 	});
 });
 
+// required parameters: hotelid, btype, desc, price
+app.post('/addbreakfast', function(req, res){
+	pool.query('INSERT INTO Breakfast VALUES (?,?,?,?)', [req.body.hotelid,req.body.btype,req.body.desc,req.body.price], function(err, results){
+		if (err) throw err;
+		res.json(results);
+	});
+});
+
+// required parameters: hotelid, stype, cost
+app.post('/addservice', function(req, res){
+	pool.query('INSERT INTO Service VALUES (?,?,?)', [req.body.hotelid,req.body.stype,req.body.cost], function(err, results){
+		if (err) throw err;
+		res.json(results);
+	});
+});
+
 // required parameters: cid, hotelid, stype, btype, roomno, rating, text
 app.post('/addreview', function(req, res){
 	generateUniqueID('Review', 'ReviewId', function(id){
@@ -98,6 +114,33 @@ app.post('/addreview', function(req, res){
 		});
 	});
 });
+
+app.post('/getreservations', function(req, res){
+	pool.query('SELECT * FROM Reservation WHERE CID=?', [req.body.cid]).then(function(results){
+		pool.query('SELECT * FROM Reserves').then(function(results2){
+			join(results, results2, 'InvoiceNo', 'rooms');
+			pool.query('SELECT * FROM includes').then(function(results3){
+				join(results, results3, 'InvoiceNo', 'breakfast');
+				pool.query('SELECT * FROM provides').then(function(results4){
+					join(results, results4, 'InvoiceNo', 'services');
+					res.json(results);
+				});
+			});
+		});
+	});
+});
+
+function join(results, results2, columnName, joinName){
+	for (i = 0; i < results.length; i++){
+		results[i][joinName] = [];
+		for (j = 0; j < results2.length; j++){
+			if (results[i][columnName] == results2[j][columnName]){
+				delete results2[j][columnName];
+				results[i][joinName].push(results2[j]);
+			}
+		}
+	}
+}
 
 const port = process.env.PORT || 8080;
 app.listen(port, function(){
