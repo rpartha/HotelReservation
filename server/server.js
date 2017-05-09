@@ -135,10 +135,10 @@ app.post('/addbreakfastreview', function(req, res){
 
 // required parameters: cid, hotelidstype, rating, text
 app.post('/addservicereview', function(req, res){
-	var hotelid = req.body.hotelidbtype.split(";")[0];
-	var btype = req.body.hotelidbtype.split(";")[1];
+	var hotelid = req.body.hotelidstype.split(";")[0];
+	var stype = req.body.hotelidstype.split(";")[1];
 	generateUniqueID('Review', 'ReviewId', function(id){
-		pool.query('INSERT INTO Review (CID,ReviewId,HotelId,bType,Rating,TextComment) VALUES (?,?,?,?,?,?)', [req.cid,id,hotelid,btype,req.body.rating,req.body.text], function(err, results){
+		pool.query('INSERT INTO Review (CID,ReviewId,HotelId,sType,Rating,TextComment) VALUES (?,?,?,?,?,?)', [req.cid,id,hotelid,stype,req.body.rating,req.body.text], function(err, results){
 			if (err) throw err;
 			res.redirect('/dashboard.html');
 		});
