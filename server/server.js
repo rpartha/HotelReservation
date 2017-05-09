@@ -162,21 +162,28 @@ app.post('/getservices', function(req, res){
 // required parameters: hotelid, startdate, enddate, rooms[], breakfast
 app.post('/makereservation', function(req, res){
     generateUniqueID('Reservation', 'InvoiceNo', function(invoice){
-    	pool.query('INSERT INTO CreditCard VALUES (?,?,?,?,?,?)', [req.body.cardno,req.body.addr,req.body.name,req.body.code,req.body.type,req.body.expdate]).then(function(results){
-			pool.query('INSERT INTO Reservation VALUES(?,?,?,?,?)', [req.cid, req.body.cardno, invoice, req.body.resdate, req.body.totalamt]).then(function(results2){
+    	pool.query('INSERT INTO CreditCard(Cnumber,BillingAddr,CC_name,SecCode,CC_type,ExpDate) VALUES (?,?,?,?,?,?)', [req.body.cardno,req.body.addr,req.body.name,req.body.code,req.body.type,req.body.expdate]).then(function(results){
+			pool.query('INSERT INTO Reservation(CID,Cnumber,InvoiceNo,TotalAmt) VALUES(?,?,?,?,?)', [req.cid, req.body.cardno, invoice, req.body.totalamt]).then(function(results2){
                 for(i =  0; i < rooms.length; i++){
-                    pool.query('INSERT INTO Reserves VALUES(?,?,?,?,?,?)', [req.body.hotelid, body.rooms[i].room_no, invoice, req.body.startdate, req.body.enddate,req.body.days]);
+                    pool.query('INSERT INTO Reserves(HotelId,Room_no,InvoiceNo,InDate,OutDate,NoOfDays) VALUES(?,?,?,?,?,?)', [req.body.hotelid, body.rooms[i].room_no, invoice, req.body.startdate, req.body.enddate,req.body.days]);
                 }
                 for(j = 0; j < breakfasts.length; j++){
-                    pool.query('INSERT INTO includes VALUES(?,?,?)', [req.body.hotelid, req.body.breakfasts[j].btype, invoice]);
+                    pool.query('INSERT INTO includes(HotelId,bType,InvoiceNo) VALUES(?,?,?)', [req.body.hotelid, req.body.breakfasts[j].btype, invoice]);
                 }
                 for(k = 0; k < services.length; k++){
-                    pool.query('INSERT INTO provides VALUES(?,?,?)', [req.body.hotelid, req.body.services[k].stype, invoice]);
+                    pool.query('INSERT INTO provides(HotelId, sType, InvoiceNo) VALUES(?,?,?)', [req.body.hotelid, req.body.services[k].stype, invoice]);
                 }
             });
         });
     });
 });
+
+app.post('/getavailrooms', function(req, res){
+	pool.query('SELECT h.A_country, h.A_state, r.room_no FROM Hotel h, Room r WHERE NOT EXISTS (SELECT re.OutDate, re.InDate FROM Reserves reWHERE re.OutDate >= STR_TO_DATE(req.body.check_in, '%m,%d,%Y') AND re.InDate <= STR_TO_DATE(req.body.check_out, '%m,%d,%Y') AND re.HotelId = h.HotelId AND re.room_no = r.room_no').then(function(results){
+		res.json(results);
+	});
+});
+
 
 // required parameters: cardno, addr, name, code, type, expdate
 app.post('/addcc', function(req, res){

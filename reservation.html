@@ -92,7 +92,7 @@
         </div>
     </div>
         <div id='test1' class="col s12">
-            <form class = "formValidate" action = "" id = "search">
+            <form class = "formValidate" action = "/getavailrooms" method = "post" id = "search">
                     <div class = "row">
                         <div class="input-field col s4">
                           <input placeholder="Country" id="country" type="text" class="validate">
@@ -171,7 +171,7 @@
                 </p>
             </form>
             <br/>
-            <a class="waves-effect waves-light btn red" href = '#test4' type = "submit" id = "btnContinue2" style="margin-left:150vh;">PAY NOW</a>
+            <a class="waves-effect waves-light btn red" href = '/bill.html' type = "submit" id = "btnContinue2" style="margin-left:150vh;">PAY NOW</a>
         </div>
 
     <script>
@@ -180,7 +180,12 @@
             $("#btnContinue").click(function() {
                 if(validateSearch()){
                     //$('ul.tabs').tabs('select_tab', 'test2');
-                    $("#search").submit();
+                    $("#search").submit(function(){
+                        const request = require('superagent');
+                        request.get('/getavailrooms').end(function(){
+                        });
+                    });
+                    //$('ul.tabs').tabs('select_tab', 'test2');
                 }
             });
             $("#btnContinue2").click(function() {
@@ -235,6 +240,14 @@
         if(w == ""){
             alert("Check-In date is required!");
             return false;
+        }
+
+        var dt = new Date(w);
+        var dt2 = new Date(u);
+
+        if(u <= w){
+          alert("Check-Out date is less than check-in!");
+          return false;
         }
 
         window.location = '#test2'
