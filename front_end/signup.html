@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html>
 	<head>
-    <script type="text/javascript" src="https://apis.google.com/js/platform.js" async defer></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    
-			<title>
-				Sign-Up
-			</title>
+	<title>Sign-Up</title>
 	</head>
 	<body>
       <h1> Sign-Up </h1>
 	    <form action="/register" method="post" id="form">
-					<input type="text" name="address" placeholder="Please Enter Your Address" style="width: 100%"><br>
-					<input type="tel" name="phone" placeholder="Please Enter Your Phone Number" style="width: 100%"><br>
-          <input class="MyButton" type="submit" value="Submit"/>
+			<input type="text" name="address" placeholder="address"><br>
+			<input type="tel" name="phone" placeholder="phone"><br>
+          	<input class="MyButton" type="submit" value="Submit"/>
 	    </form>
-      <script type="text/javascript" src="./js/googleauth.js"></script>
     </body>
+	<script type="text/javascript">
+		$("#form").submit(function(eventObj){
+			$(this).append('<input type="hidden" name="tokenId" value="' + localStorage.getItem("tokenId") + '"/>');
+			return true;
+		})
+	</script>
 </html>

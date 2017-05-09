@@ -3,7 +3,21 @@
 	<head>
 		<script type="text/javascript" src="https://apis.google.com/js/platform.js" async defer></script>
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-		<script type="text/javascript" src="./js/googleauth.js"></script>
+		<script type="text/javascript">
+			function onSignIn(googleUser) {
+				localStorage.removeItem("tokenId");
+				localStorage.setItem("tokenId", googleUser.getAuthResponse().id_token);
+				$.post('./user', {tokenId: googleUser.getAuthResponse().id_token}, function(data){
+					if (data.email == 'astranglewhistle@gmail.com'){
+						window.location.replace('./admin.html');
+					} else if (!data.registered){
+						window.location.replace('./signup.html');
+					} else {
+						window.location.replace('./dashboard.html');
+					}
+				});
+			}
+		</script>
 		<meta name="google-signin-client_id" content="49777398274-9dqj5g4ebbd4au20p4t39gotd4qfpc53.apps.googleusercontent.com">
 	</head>
 	<body>

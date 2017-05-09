@@ -13,6 +13,7 @@ const app = express();
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(function(req, res, next){
+	if (!req.body.tokenId || req.body.tokenId == undefined) req.body.tokenId = req.query.tokenId;
 	request('https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=' + req.body.tokenId, function (err, response, bodyString){
 		if (err) throw err;
 		var body = JSON.parse(bodyString);
@@ -108,12 +109,38 @@ app.post('/addservice', function(req, res){
 	});
 });
 
-// required parameters: cid, hotelid, stype, btype, roomno, rating, text
-app.post('/addreview', function(req, res){
+// required parameters: cid, hotelidroomno, rating, text
+app.post('/addroomreview', function(req, res){
+	var hotelid = req.body.hotelidroomno.split(";")[0];
+	var roomno = req.body.hotelidroomno.split(";")[1];
 	generateUniqueID('Review', 'ReviewId', function(id){
-		pool.query('INSERT INTO Review VALUES (?,?,?,?,?,?,?,?)', [req.body.cid,id,req.body.hotelid,req.body.stype,req.body.btype,req.body.roomno,req.body.rating,req.body.text], function(err, results){
+		pool.query('INSERT INTO Review (CID,ReviewId,HotelId,Room_No,Rating,TextComment) VALUES (?,?,?,?,?,?)', [req.cid,id,hotelid,roomno,req.body.rating,req.body.text], function(err, results){
 			if (err) throw err;
-			res.json(results);
+			res.redirect('/dashboard.html');
+		});
+	});
+});
+
+// required parameters: cid, hotelidbtype, rating, text
+app.post('/addbreakfastreview', function(req, res){
+	var hotelid = req.body.hotelidbtype.split(";")[0];
+	var btype = req.body.hotelidbtype.split(";")[1];
+	generateUniqueID('Review', 'ReviewId', function(id){
+		pool.query('INSERT INTO Review (CID,ReviewId,HotelId,bType,Rating,TextComment) VALUES (?,?,?,?,?,?)', [req.cid,id,hotelid,btype,req.body.rating,req.body.text], function(err, results){
+			if (err) throw err;
+			res.redirect('/dashboard.html');
+		});
+	});
+});
+
+// required parameters: cid, hotelidstype, rating, text
+app.post('/addservicereview', function(req, res){
+	var hotelid = req.body.hotelidbtype.split(";")[0];
+	var btype = req.body.hotelidbtype.split(";")[1];
+	generateUniqueID('Review', 'ReviewId', function(id){
+		pool.query('INSERT INTO Review (CID,ReviewId,HotelId,bType,Rating,TextComment) VALUES (?,?,?,?,?,?)', [req.cid,id,hotelid,btype,req.body.rating,req.body.text], function(err, results){
+			if (err) throw err;
+			res.redirect('/dashboard.html');
 		});
 	});
 });
@@ -144,7 +171,6 @@ app.post('/addcc', function(req, res){
 	});
 });
 
-
 app.get('/admin', function(req, res){
 	var adminDat = {};
 	pool.query('SELECT HotelId, R_type, MAX(Avg_rating) FROM (SELECT Room.HotelId, R_type, AVG(Rating) as \'Avg_rating\' FROM Room INNER JOIN Review ON Room.HotelId=Review.HotelId AND Room.Room_no=Review.Room_no GROUP BY Room.HotelId, R_type) AS GROUPING GROUP BY HotelId').then(function(results){
@@ -162,24 +188,37 @@ app.get('/admin', function(req, res){
 	});
 });
 
+app.get('/getrooms', function(req, res){
+	pool.query('SELECT Reserves.Room_no, Reserves.HotelId FROM Reserves, Reservation WHERE Reserves.InvoiceNo=Reservation.InvoiceNo AND Reservation.CID=?', [req.cid]).then(function(results){
+		res.json(results);
+	});
+});
+
+app.get('/getbreakfasts', function(req, res){
+	pool.query('SELECT includes.bType, includes.HotelId FROM includes, Reservation WHERE includes.InvoiceNo=Reservation.InvoiceNo AND Reservation.CID=?', [req.cid]).then(function(results){
+		res.json(results);
+	});
+});
+
+app.get('/getservices', function(req, res){
+	pool.query('SELECT provides.sType, provides.HotelId FROM provides, Reservation WHERE provides.InvoiceNo=Reservation.InvoiceNo AND Reservation.CID=?', [req.cid]).then(function(results){
+		res.json(results);
+	});
+});
+
 app.get('/getreservations', function(req, res){
-	request('https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=' + req.query.tokenId, function (err, response, bodyString){
-		if (err) throw err;
-		var body = JSON.parse(bodyString);
-		pool.query('SELECT * FROM Reservation WHERE CID=?', [body.sub]).then(function(results){
-			pool.query('SELECT * FROM Reserves').then(function(results2){
-				join(results, results2, 'InvoiceNo', 'rooms');
-				pool.query('SELECT * FROM includes').then(function(results3){
-					join(results, results3, 'InvoiceNo', 'breakfast');
-					pool.query('SELECT * FROM provides').then(function(results4){
-						join(results, results4, 'InvoiceNo', 'services');
-						res.json(results);
-					});
+	pool.query('SELECT * FROM Reservation WHERE CID=?', [req.cid]).then(function(results){
+		pool.query('SELECT * FROM Reserves').then(function(results2){
+			join(results, results2, 'InvoiceNo', 'rooms');
+			pool.query('SELECT * FROM includes').then(function(results3){
+				join(results, results3, 'InvoiceNo', 'breakfast');
+				pool.query('SELECT * FROM provides').then(function(results4){
+					join(results, results4, 'InvoiceNo', 'services');
+					res.json(results);
 				});
 			});
 		});
 	});
-	
 });
 
 function join(results, results2, columnName, joinName){
