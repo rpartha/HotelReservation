@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+	<head>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<title>Admin</title>
+	</head>
+	<body>
+      <h1> Admin </h1>
+	    <button onclick="getadmin()">Get Statistics</button>
+		<div class = "container" id="cont"></div>
+    </body>
+	<script type="text/javascript">
+		$("#form").submit(function(eventObj){
+			$(this).append('<input type="hidden" name="tokenId" value="' + localStorage.getItem("tokenId") + '"/>');
+			return true;
+		})
+
+		function getadmin(){
+			$.get('/admin', function(data){
+				$('.container').append("<plaintext>" + JSON.stringify(data, null, '\t'));
+			})
+		}
+	</script>
+</html>
