@@ -159,9 +159,23 @@ app.post('/getservices', function(req, res){
 	});
 });
 
-// required parameters: hotelid, startdate, enddate, rooms[]
+// required parameters: hotelid, startdate, enddate, rooms[], breakfast
 app.post('/makereservation', function(req, res){
-
+    generateUniqueID('Reservation', 'InvoiceNo', function(invoice){
+    	pool.query('INSERT INTO CreditCard VALUES (?,?,?,?,?,?)', [req.body.cardno,req.body.addr,req.body.name,req.body.code,req.body.type,req.body.expdate]).then(function(results){
+			pool.query('INSERT INTO Reservation VALUES(?,?,?,?,?)', [req.cid, req.body.cardno, invoice, req.body.resdate, req.body.totalamt]).then(function(results2){
+                for(i =  0; i < rooms.length; i++){
+                    pool.query('INSERT INTO Reserves VALUES(?,?,?,?,?,?)', [req.body.hotelid, body.rooms[i].room_no, invoice, req.body.startdate, req.body.enddate,req.body.days]);
+                }
+                for(j = 0; j < breakfasts.length; j++){
+                    pool.query('INSERT INTO includes VALUES(?,?,?)', [req.body.hotelid, req.body.breakfasts[j].btype, invoice]);
+                }
+                for(k = 0; k < services.length; k++){
+                    pool.query('INSERT INTO provides VALUES(?,?,?)', [req.body.hotelid, req.body.services[k].stype, invoice]);
+                }
+            });
+        });
+    });
 });
 
 // required parameters: cardno, addr, name, code, type, expdate
